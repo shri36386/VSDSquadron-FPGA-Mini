@@ -27,4 +27,16 @@ Key Features of the VSDSQUADRON FPGA MINI Board
    + The board contains a set of multi-color RGB LED, which allows users to test digital logic by displaying different colors.
    + Red, Green, and Blue LEDs are controlled separately via Verilog.
    + Pulse Width Modulation (PWM) can be used to control brightness and create color variations.
+
+* GPIO Pins (General-Purpose Input/Output)
+
+  + GPIOs are programmable input/output pins that allow the FPGA to communicate with external hardware.
+  + Can be configured as input or output.
+  + Used to connect with sensors, switches, displays, communication modules (SPI, I2C, UART), and other peripherals.
+
+* Open-Source Friendly FPGA Toolchains
+
+  + Unlike many FPGA vendors that require expensive proprietary tools, the iCE40 series supports open-source FPGA toolchains, making development more accessible.
+
+
   </details>
