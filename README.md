@@ -1,1 +1,1 @@
-# VSDSquadron-FPGA-Mini
+# VSDSquadron FPGA Mini
