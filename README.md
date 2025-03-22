@@ -105,4 +105,5 @@ Since all color components use the same frequency counter bit, the LED cycles th
 
 The RGB LED blinks at a frequency derived from frequency_counter_i[22], resulting in visible color transitions. The testwire output provides a signal for monitoring internal behavior.
 
+STEP - 2 
    </details>
