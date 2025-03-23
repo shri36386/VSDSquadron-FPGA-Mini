@@ -105,5 +105,104 @@ Since all color components use the same frequency counter bit, the LED cycles th
 
 The RGB LED blinks at a frequency derived from frequency_counter_i[22], resulting in visible color transitions. The testwire output provides a signal for monitoring internal behavior.
 
-STEP - 2 
+STEP - 2 - Creating the PCF File
+
+The Physical Constraints File (PCF) is used in FPGA design to specify pin assignments, mapping logical signals in the Verilog code to the actual FPGA package pins. Below is the detailed breakdown for the VSDSquadron FPGA Mini board based on the provided PCF file.
+
+1. The pin assignments
+![image](https://github.com/user-attachments/assets/9739dc83-85f0-421e-ba9b-20a7bd76b2bb)
+
+2. Significance of Each Connection
+LED Control Pins (led_red, led_blue, led_green)
+
+- These are connected to the RGB LED on the FPGA board.
+
+- The SB_RGBA_DRV module in the Verilog code drives these LEDs.
+
+- The brightness and color are determined by the frequency counter in the code.
+
+Hardware Clock (hw_clk)
+
+- Pin 20 is assigned to receive the hardware oscillator clock.
+
+- In the provided Verilog code, however, an internal oscillator (SB_HFOSC) is used instead of an external clock.
+
+- This means hw_clk is currently not used, but it can be modified to use an external clock if required.
+
+Test Signal (testwire)
+
+- Connected to Pin 17, testwire is assigned bit 5 of the frequency counter (frequency_counter_i[5]).
+
+- This signal allows for observing a divided-down clock for debugging or external monitoring.
+
+Conclusion
+The PCF file ensures that logical signals in Verilog are correctly mapped to the hardware pins of the VSDSquadron FPGA Mini board. These mappings are crucial for correct LED operation and debugging.
+
+STEP 3 - Itegating with VSDSquadron FPGA Mini Board
+This section describes the process of integrating the Verilog design and PCF file with the VSDSquadron FPGA Mini board and programming the FPGA to observe the RGB LED behavior.
+
+1. Understanding the VSDSquadron FPGA Mini Board
+
+The VSDSquadron FPGA Mini board is an iCE40-based FPGA development board designed for low-power applications. To successfully integrate our Verilog design, we need to:
+
+- Understand the FPGA’s features and pin layout using its datasheet.
+
+- Ensure the physical board connections match the PCF file.
+
+- Use USB-C and FTDI for communication and programming.
+
+2. Understand the FPGA’s features and pin layout using its datasheet and Ensure the physical board connections match the PCF file.
+
+We cross-check the PCF file (VSDSquadronFM.pcf) with the board’s datasheet to ensure the pin mappings align correctly.
+![image](https://github.com/user-attachments/assets/9739dc83-85f0-421e-ba9b-20a7bd76b2bb)
+
+Verification:
+
+- Checked board schematics to confirm LED pins are correctly assigned.
+
+- testwire was verified as a debugging signal output.
+
+- hw_clk was mapped but not used, since the Verilog code uses an internal oscillator.
+
+3. Connecting the Board to the Computer
+Required Setup:
+
+- USB-C cable for power and communication.
+
+- FTDI drivers installed (for USB-to-serial communication).
+
+- Development tools installed, including yosys, nextpnr, icestorm, and make.
+
+Steps to Connect:
+
+- Plug in the board using a USB-C cable.
+
+- Ensure the system recognizes the FPGA using: lsusb
+
+4. Building and Flashing the Verilog Code
+
+The provided Makefile automates the synthesis and programming process.
+
+Steps to Compile and Program the FPGA:
+
+- Clean previous builds: make clean
+
+This removes old build files.
+
+- Build the project: make build
+This runs Yosys (synthesis), nextpnr (place & route), and generates the bitstream file.
+
+- Flash the FPGA: sudo make flash
+This uploads the bitstream to the FPGA board.
+
+5. Observing the RGB LED Behavior
+
+After flashing, the RGB LED should exhibit blinking behavior based on the internal oscillator and frequency counter.
+
+Expected Observations:
+
+- The LED changes colors periodically as dictated by frequency_counter_i[22].
+
+- The testwire signal (Pin 17) toggles at a lower frequency, observable on an oscilloscope.
+
    </details>
