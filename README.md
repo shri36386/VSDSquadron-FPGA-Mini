@@ -206,3 +206,10 @@ Expected Observations:
 - The testwire signal (Pin 17) toggles at a lower frequency, observable on an oscilloscope.
 
    </details>
+
+<details>
+  <summary><h2>TASK 2 - </h2> </summary>
+
+
+
+</details>
