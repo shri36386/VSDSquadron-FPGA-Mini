@@ -63,7 +63,7 @@ The Verilog module (top.v) consists of input and output ports that interact with
 
 Inputs:
 
-hw_clk: External hardware clock input (not utilized in this implementation as the internal oscillator is used).
+- hw_clk: External hardware clock input (not utilized in this implementation as the internal oscillator is used).
 
 Outputs:
 
@@ -205,10 +205,121 @@ Expected Observations:
 
 - The testwire signal (Pin 17) toggles at a lower frequency, observable on an oscilloscope.
 
+Implementation in Openlane -
+The Implementation of the code is shown in the below ideo -
+
+
    </details>
 
 <details>
-  <summary><h2>TASK 2 - </h2> </summary>
+  <summary><h2>TASK 2 - Implement a UART loopback mechanism </h2> </summary>
+
+UART and UART loophole mechanism -
+
+UART (Universal Asynchronous Receiver-Transmitter)
+  
+  - It is a hardware communication protocol used for serial communication between devices.
+
+  - It enables data transmission without requiring a shared clock signal, making it an asynchronous method.
+
+  - UART consists of a transmitter (TX) and a receiver (RX), which communicate using a predetermined baud rate, typically including start and stop bits for synchronization.
+
+  - This protocol is widely used in embedded systems, microcontrollers, and communication modules like Bluetooth and GPS due to its simplicity and reliability.
+
+UART Loophole Mechanism 
+
+- It refers to potential vulnerabilities or unintended behaviors in UART communication that can be exploited for debugging, accessing restricted system functionalities, or even security breaches. 
+
+- These loopholes often arise from improperly secured UART interfaces, allowing attackers to gain low-level access to a device’s firmware, bootloader, or shell.
+
+- Exploiting UART loopholes can lead to unauthorized modifications, data extraction, or system control, making it crucial for developers to implement security measures such as disabling exposed UART ports, requiring authentication, or encrypting transmitted data.
+
+Objective of this task: Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
+
+<details>
+  <summary><h3>STEP 1 - Analysis of Existing Code</h3> </summary>
+
+Port Analysis
+
+The module defines six ports:
+
+RGB LED Outputs - 
+
+- led_red, led_blue, led_green → Three PWM-driven LED outputs.
+
+UART Communication Pins
+
+   + uarttx → UART Transmit pin (data sent out).
+
+   + uartrx → UART Receive pin (data received).
+
+System Clock Input - 
+
+ - hw_clk → External system clock input.
+
+Internal Component Analysis
+
+1. Internal Oscillator (SB_HFOSC)
+
+- Generates an internal clock signal (int_osc).
+
+- Uses CLKHF_DIV = "0b10" to divide frequency.
+
+- Provides a stable clock source for timing operations.
+
+2. Frequency Counter
+
+- 28-bit counter (frequency_counter_i).
+
+- Increments on every positive clock edge.
+
+- Used for timing signal generation.
+
+3. UART Loopback
+
+- Direct connection between uartrx (input) and uarttx (output).
+
+- Echoes back any received UART data immediately.
+
+- Enables real-time verification of UART communication.
+
+4. RGB LED Driver (SB_RGBA_DRV)
+
+- Controls three independent RGB channels.
+
+- Uses PWM (Pulse Width Modulation) for brightness adjustment.
+
+- Current limiting set to minimum (0b000001) to avoid excessive power consumption.
+
+- Maps UART input to LED intensity, making the LEDs visually reflect incoming UART data.
+
+Operation Analysis
+
+1. UART Input Processing
+
+- Receives UART data via uartrx pin.
+
+- Immediately loops the data back through uarttx.
+
+- Same data also drives RGB LEDs, causing them to react to incoming serial data.
+
+2. LED Control
+
+- RGB LED driver converts UART signal into PWM output.
+
+- All LEDs respond identically to UART input.
+
+- Brightness changes dynamically based on received data values.
+
+3. Timing Generation
+
+- Internal oscillator provides clock reference for stable operation.
+
+- Frequency counter (frequency_counter_i) generates timing signals.
+
+- Used for LED PWM control and UART data synchronization.
+
+</details>
 
 
 
