@@ -206,7 +206,7 @@ Expected Observations:
 - The testwire signal (Pin 17) toggles at a lower frequency, observable on an oscilloscope.
 
 Implementation in Openlane -
-The Implementation of the code is shown in the below ideo -
+The Implementation of the code is shown in the below video -
 
 
    </details>
@@ -321,6 +321,83 @@ Operation Analysis
 
 </details>
 
+<details>
+  <summary><h3>STEP 2 - Design Documentation</h3> </summary>
+  
+Block diagram illustrating the UART loopback architecture
 
+![image](https://github.com/user-attachments/assets/5451994b-31c1-47dc-904e-940379cd1496)
+
+<details>
+  <summary><h3>The above diagram depicts the following -</h3> </summary>
+
+1. UART Loopback Mechanism
+
+- The UART receiver (uartrx) captures incoming serial data from an external source (e.g., a PC or microcontroller).
+
+- This data is directly forwarded to the UART transmitter (uarttx), creating a loopback effect where received data is immediately echoed back.
+
+- This setup allows real-time verification of UART communication, ensuring data integrity and debugging capability.
+
+2. Internal Clock Generation & Timing
+
+- A high-frequency oscillator (SB_HFOSC) generates the system clock (int_osc), eliminating the need for an external clock source.
+
+- A 28-bit frequency counter (frequency_counter_i28-bit) increments on each clock cycle, providing internal timing signals.
+
+- These timing signals regulate various system operations, including UART baud rate handling and LED PWM control.
+
+3. RGB LED Control via UART Data
+
+- The RGB Driver (SB_RGBA_DRV) receives UART data and maps it to LED brightness levels using Pulse Width Modulation (PWM).
+
+- All three LEDs (led_red, led_blue, led_green) respond identically, changing brightness based on the received UART values.
+
+- This behavior provides a visual representation of the incoming serial data, making it easier to observe communication activity.
+
+4. Control Signals & Power Management
+
+- The control block (Enable Signals - RGBLEDEN, CURREN) ensures that the RGB LED driver is activated only when needed.
+
+- The current setting (0b000001) is configured to the minimum power level, preventing excessive power consumption while still allowing LED visibility.
+
+- These settings allow efficient operation while maintaining full functionality of the UART-driven LED display.
+
+5. Complete System Integration & Real-Time Testing
+
+- This system combines UART communication, clock generation, LED driving, and control logic into a compact FPGA implementation.
+
+- Testing is straightforward:
+
+Send data through UART (from a PC or another microcontroller).
+
+Verify that the same data is received back (loopback confirmation).
+
+Observe that RGB LEDs respond to the data (visual feedback).
+
+- This integrated design is useful for debugging, UART validation, and real-time embedded system monitoring.
+
+</details>
+
+Circuit diagram showing connections between the FPGA and any peripheral devices used -
+
+![image](https://github.com/user-attachments/assets/d942a45c-94df-46ff-8e2f-4d33277c11f1)
+
+<details>
+  <summary><h3>The above diagram depicts the following -</h3> </summary>
+
+- UART Loopback Communication – The UART interface (uartrx / uarttx) receives serial data and immediately transmits it back, enabling real-time verification and debugging. The UART bridge connects external devices for communication.
+
+- Internal Clock & Timing – A high-frequency oscillator (int_osc) generates the system clock, while a 28-bit frequency counter ensures proper timing for UART and LED control.
+
+- RGB LED Control via PWM – The RGB Driver (SB_RGBA_DRV) converts UART data into PWM signals, controlling LED brightness. All LEDs respond based on received UART data.
+
+- Power Supply & Signal Flow – The power supply provides VCC and GND to the FPGA, UART bridge, and RGB LEDs, ensuring stable operation. The PWM control signal modulates LED intensity.
+
+- Efficient & Low-Power Operation – Control signals (RGBLEDEN, CURREN) optimize LED power usage, preventing excessive current draw while maintaining brightness control.
+
+</details>
+
+</details>
 
 </details>
