@@ -208,7 +208,6 @@ Expected Observations:
 Implementation in Openlane -
 The Implementation of the code is shown in the below video -
 
-
    </details>
 
 <details>
@@ -237,7 +236,7 @@ UART Loophole Mechanism
 Objective of this task: Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
 <details>
-  <summary><h3>STEP 1 - Analysis of Existing Code</h3> </summary>
+  <summary><h3>STEP 1 - ANALYSIS OF EXISTING CODE </h3> </summary>
 
 Port Analysis
 
@@ -322,7 +321,7 @@ Operation Analysis
 </details>
 
 <details>
-  <summary><h3>STEP 2 - Design Documentation</h3> </summary>
+  <summary><h3>STEP 2 - DESIGN DOCUMENTATION </h3> </summary>
   
 Block diagram illustrating the UART loopback architecture
 
@@ -397,6 +396,18 @@ Circuit diagram showing connections between the FPGA and any peripheral devices 
 - Efficient & Low-Power Operation – Control signals (RGBLEDEN, CURREN) optimize LED power usage, preventing excessive current draw while maintaining brightness control.
 
 </details>
+
+</details>
+
+<details>
+  <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
+
+  <details>
+  <summary><h3>STEPS TO TRANSMIT CODE TO THE FPGA BOARD</h3> </summary>
+1. Create the following files (Makefile, uart_trx - verilog, top module - verilog, pcf file) in a folder under VSDSquadronFM. In this case I hae named it uart_loop.
+
+2. After doing so, go to the terminal an
+  </details>
 
 </details>
 
