@@ -206,7 +206,8 @@ Expected Observations:
 - The testwire signal (Pin 17) toggles at a lower frequency, observable on an oscilloscope.
 
 Implementation in Openlane -
-The Implementation of the code is shown in the below video -
+The Implementation of the code is shown in the below PHOTOS-
+![image](https://github.com/user-attachments/assets/b20b0139-2ea5-4d56-bfdf-2ac327b72a79)
 
    </details>
 
@@ -415,6 +416,8 @@ To transmit the code to the FPGA board
       cd uart_loopback
 
 - After this, run the commands "make build", and "sudo make flash". Then, your screen will look like:
+![image](https://github.com/user-attachments/assets/13e07c77-159e-4528-b46c-298ecea3114d)
+
 
 </details>
 
@@ -440,6 +443,8 @@ To transmit the code to the FPGA board
 - If the FPGA's loopback system is working correctly, you should see the same message appear in the received data log in Docklight. This confirms that data sent from Docklight is successfully received by the FPGA and immediately retransmitted back. 
 
 - If you do not receive the expected message, double-check the COM port settings, baud rate, and UART connections. This method provides a quick and efficient way to verify UART functionality, ensuring that the FPGA correctly processes serial communication.
+
+![image](https://github.com/user-attachments/assets/0869c518-aad6-44cb-9ed8-a3e76e70d582)
 
 </details>
 
