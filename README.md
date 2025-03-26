@@ -208,6 +208,9 @@ Expected Observations:
 Implementation in Openlane -
 The Implementation of the code is shown in the below PHOTOS-
 ![image](https://github.com/user-attachments/assets/b20b0139-2ea5-4d56-bfdf-2ac327b72a79)
+![image](https://github.com/user-attachments/assets/d449328c-9d81-4fe5-8239-b1f5cbc7b30d)
+![image](https://github.com/user-attachments/assets/65f3976c-569e-48ee-ad91-fbddc4ac64aa)
+![image](https://github.com/user-attachments/assets/19116d96-2122-44ff-bced-eb110572a8be)
 
    </details>
 
