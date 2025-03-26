@@ -404,17 +404,42 @@ Circuit diagram showing connections between the FPGA and any peripheral devices 
 
 To transmit the code to the FPGA board
 
-- Create the following files (Makefile, uart_trx - verilog, top module - verilog, pcf file) in a folder under VSDSquadronFM. In this case I hae named it uart_loop.
+- Create the following files (Makefile, uart_trx - verilog, top module - verilog, pcf file) in a folder under VSDSquadronFM. In this case I have named it uart_loop.
 
 - After doing so, go to the terminal and enter the following commands. Also connect the board to the VM and verify the connection using lsusb. If successful, you will see "Future Technology Devices International" in the output.
 
-cd
+      cd
 
-cd VSDSquadron_FM
+      cd VSDSquadron_FM
 
-cd uart_loopback
+      cd uart_loopback
 
 - After this, run the commands "make build", and "sudo make flash". Then, your screen will look like:
+
+</details>
+
+<details>
+  <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
+
+ - To test the UART loopback functionality, we will use Docklight, a specialized serial communication software. This tool allows us to send and receive UART data, verifying whether the FPGA correctly echoes back received messages. 
+  
+ - First, after downloading and opening Docklight, ensure that your system (not the virtual machine) is connected to the correct communication port (COM port).
+ 
+ - By default, Docklight may select COM1, but you need to verify and change it if necessary. Navigate to Tools > Project Settings, where you can select the appropriate COM port; in this case, it is COM7.
+ 
+ - Additionally, set the baud rate to 9600, as this is the communication speed configured for our FPGA's UART module. This ensures that both Docklight and the FPGA are operating at the same frequency, preventing data mismatches.
+
+- Next, within Docklight, locate the "Send Sequences" section, which allows you to create and send custom UART messages. Double-click on the small blue box under the "Name" column, which will open an editor where you can enter a custom name for your message.
+
+- Select the appropriate format (e.g., ASCII or HEX) and then type the message you wish to send. After entering the message, click "Apply", and verify that your sequence appears in the Send Sequences list.
+
+- This step is essential as it confirms that your message is correctly formatted and ready for transmission. The ability to define and store multiple sequences also makes repeated testing easier, as you can quickly resend predefined messages.
+
+- Finally, to test the loopback functionality, click the arrow beside the message name to send the message through UART. 
+
+- If the FPGA's loopback system is working correctly, you should see the same message appear in the received data log in Docklight. This confirms that data sent from Docklight is successfully received by the FPGA and immediately retransmitted back. 
+
+- If you do not receive the expected message, double-check the COM port settings, baud rate, and UART connections. This method provides a quick and efficient way to verify UART functionality, ensuring that the FPGA correctly processes serial communication.
 
 </details>
 
