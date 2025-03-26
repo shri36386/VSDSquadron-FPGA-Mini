@@ -402,12 +402,21 @@ Circuit diagram showing connections between the FPGA and any peripheral devices 
 <details>
   <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
 
-  <details>
-  <summary><h3>STEPS TO TRANSMIT CODE TO THE FPGA BOARD</h3> </summary>
-1. Create the following files (Makefile, uart_trx - verilog, top module - verilog, pcf file) in a folder under VSDSquadronFM. In this case I hae named it uart_loop.
+To transmit the code to the FPGA board
 
-2. After doing so, go to the terminal an
-  </details>
+- Create the following files (Makefile, uart_trx - verilog, top module - verilog, pcf file) in a folder under VSDSquadronFM. In this case I hae named it uart_loop.
+
+- After doing so, go to the terminal and enter the following commands. Also connect the board to the VM and verify the connection using lsusb. If successful, you will see "Future Technology Devices International" in the output.
+
+cd
+
+cd VSDSquadron_FM
+
+cd uart_loopback
+
+- After this, run the commands "make build", and "sudo make flash". Then, your screen will look like:
+
+</details>
 
 </details>
 
