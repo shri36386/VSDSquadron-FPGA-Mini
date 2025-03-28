@@ -454,3 +454,86 @@ To transmit the code to the FPGA board
 </details>
 
 </details>
+
+<details>
+  <summary><h2>TASK 3 - Develop a UART transmitter module </h2> </summary>
+
+INTRODUCTION TO UART TRANSMITTER
+
+- The UART transmitter is responsible for converting parallel data into a serial stream and sending it over a communication line. It follows a standard protocol, beginning with a start bit, followed by data bits, an optional parity bit, and ending with one or more stop bits.
+
+- The transmitter operates at a predefined baud rate, ensuring synchronization with the receiver. When data is available, it is loaded into a shift register, which shifts out the bits sequentially, starting with the least significant bit (LSB). Proper timing and control signals ensure error-free transmission, making UART an efficient and widely used communication protocol in embedded systems.
+
+OBJECTIVE OF TASK - Develop a UART transmitter module capable of sending serial data from the FPGA to an external device.
+
+<details>
+  <summary><h3>STEP 1 - STUDY THE EXISTING CODE </h3> </summary>
+
+  - This Verilog module implements an 8N1 UART transmitter, meaning it sends 8 data bits, no parity, and 1 stop bit per frame.
+  
+  - The module converts an 8-bit parallel data input (txbyte) into a serial output (tx), transmitting it bit by bit at every clock cycle.
+
+MAIN COMPONENTS -
+
+Inputs:
+
+- clk → System clock signal driving the transmission process.
+
+- txbyte[7:0] → The 8-bit data to be transmitted.
+
+- senddata → A trigger signal that starts transmission when high.
+
+Outputs:
+
+- tx → Serial transmit wire, sending the data bit by bit.
+
+- txdone → Indicates when the transmission of a full byte is completed.
+
+Registers & State Variables:
+
+- state → Stores the current state of transmission (Idle, Start, Sending, Done).
+
+- buf_tx → A buffer register that holds the byte being transmitted.
+
+- bits_sent → A counter tracking how many bits have been sent.
+
+- txbit → Holds the current bit value to be transmitted.
+
+Working Process:
+
+1. Idle State (STATE_IDLE)
+
+- The transmitter remains idle (tx stays HIGH).
+
+- When senddata is triggered, it moves to the Start Transmission state.
+
+2. Start Bit (STATE_STARTTX)
+
+- The module sends a Start Bit (LOW = 0) to signal the beginning of data transmission.
+
+- Moves to the transmitting state.
+
+3. Data Transmission (STATE_TXING)
+
+- Sends the 8 data bits one by one, starting from the least significant bit (LSB).
+
+- Uses a shift register (buf_tx >> 1) to shift out each bit on txbit.
+
+- The bits_sent counter increments after each bit transmission.
+
+4. Stop Bit & Completion (STATE_TXDONE)
+
+- After sending all 8 data bits, a Stop Bit (HIGH = 1) is sent.
+
+- The txdone signal is set HIGH, indicating the byte was sent.
+
+- The module then returns to the Idle state, waiting for the next byte.
+
+<details>
+  <summary><h3>STEP 2 - DESIGN DOCUMENT </h3> </summary>
+
+  Create a block diagram detailing the UART transmitter module.
+
+</details>
+</details>
+</details>
