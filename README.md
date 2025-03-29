@@ -529,11 +529,56 @@ Working Process:
 
 - The module then returns to the Idle state, waiting for the next byte.
 
+</details>
+
 <details>
   <summary><h3>STEP 2 - DESIGN DOCUMENT </h3> </summary>
 
-  Create a block diagram detailing the UART transmitter module.
+ 1. Create a block diagram detailing the UART transmitter module.
 
-</details>
+![image](https://github.com/user-attachments/assets/23909dc7-65bd-4728-b34a-c19df38bb174)
+
+Data Input and Buffering:
+
+- The Tx byte (8-bit data) is loaded into the buffer (Buf_tx) when the Senddata trigger is received.
+
+- The system operates on a clock signal (Clk), ensuring synchronized data transmission.
+
+State Machine Control and Transmission:
+
+- The state machine manages the transmission by progressing through different states (Idle, Start, Transmit, Stop).
+
+- The Next State Decision block determines transitions based on current state and bit counter.
+
+- The Tx bit (current bit) is sequentially transmitted to the Tx (serial output) line.
+
+Completion and Status Update:
+
+- A bit counter (Bits sent) tracks how many bits have been transmitted.
+
+- Once all bits (including stop bit) are sent, the Transmission Complete Flag is raised, signaling that the UART transmission is finished.
+
+
+2. Develop a circuit diagram illustrating the FPGA's UART TX pin connection to the receiving device.
+
+![image](https://github.com/user-attachments/assets/5208106d-33bb-4dc8-ac78-661cf7d0cf52)
+
+- UART Transmitter Operation:
+The UART transmitter operates at a 3.3V logic level and sends serial data through its TX pin. This pin outputs a digital signal that represents transmitted data bits. However, if the receiving device operates at a different voltage level (e.g., 5V logic), direct connection might cause communication issues or even damage the receiver due to voltage mismatches.
+
+- Signal Conditioning Using Voltage Divider:
+To ensure compatibility between the transmitter and receiver, a resistor voltage divider is used. The voltage divider consists of two resistors: R1 (1kΩ) and R2 (2kΩ). These resistors form a passive circuit that reduces the transmitted signal voltage before it reaches the RX pin of the receiving device. The formula for voltage division is:
+
+![image](https://github.com/user-attachments/assets/5decff6a-4492-44fa-9ef8-b228f1997703)
+
+
+This means that the signal is scaled down to 2.2V, making it safe and readable for the receiving device.
+
+- Receiving Device and Proper Signal Handling:
+The adjusted voltage signal is then fed into the RX pin of the receiving device. Since the voltage level is now appropriately scaled down, the receiving device can correctly interpret the transmitted UART data without any risk of voltage damage or miscommunication.
+
+- Common Ground Connection:
+A common ground (GND) is essential for proper communication between the UART transmitter and the receiver. Both devices must share the same reference voltage to ensure that logic levels are interpreted correctly. Without a shared ground, the signal could be unstable, leading to errors in communication.
+
 </details>
 </details>
