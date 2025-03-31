@@ -581,4 +581,10 @@ The adjusted voltage signal is then fed into the RX pin of the receiving device.
 A common ground (GND) is essential for proper communication between the UART transmitter and the receiver. Both devices must share the same reference voltage to ensure that logic levels are interpreted correctly. Without a shared ground, the signal could be unstable, leading to errors in communication.
 
 </details>
+
+<details>
+  <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
+
+</details>
+  
 </details>
