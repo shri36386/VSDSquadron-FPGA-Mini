@@ -606,5 +606,73 @@ sudo make flash
 That's it! The code is successfully transmitted.
 
 </details>
+
+<details>
+  <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
+
+</details>
+</details>
+
+<details>
+  <summary><h2>TASK 4 - Implementing a UART Transmitter that Sends Data Based on Sensor Inputs </h2> </summary>
   
+Objective: Implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
+
+<details>
+  <summary><h3>STEP 1 - STUDY THE EXISTING CODE </h3> </summary>
+
+uart_tx_sense Module Overview
+The uart_tx_sense module is a dedicated UART transmitter designed for sensor data transmission. Its architecture consists of three key components:
+
+Data Buffer Management – Stores and synchronizes sensor data.
+
+UART Protocol Controller – Handles framing and transmission sequencing.
+
+Transmission Control Logic – Ensures reliable bit-by-bit data transfer.
+
+Operation Flow
+Data Acquisition: Captures valid sensor data in the IDLE state and stores it in a 32-bit buffer.
+
+Transmission Protocol:
+
+START – Sends UART start bit (low).
+
+DATA – Transmits 8 bits sequentially.
+
+STOP – Ensures proper termination with a high bit.
+
+Status Indication:
+
+ready signal indicates readiness for new data.
+
+tx_out provides a continuous UART stream.
+
+Port Analysis
+Clock & Reset:
+
+clk – Drives sequential operations.
+
+reset_n – Active-low asynchronous reset.
+
+Data Interface:
+
+data – 32-bit input for sensor readings.
+
+valid – Indicates valid incoming data.
+
+UART Interface:
+
+tx_out – Serial output following UART protocol.
+
+Status Interface:
+
+ready – Signals readiness for new data.
+
+Internal Components
+State Machine Controller: Manages protocol states, controls data flow, and ensures correct UART framing.
+
+Data Buffer: Stores and stabilizes incoming sensor data for smooth transmission.
+
+Transmission Controller: Manages bit-by-bit transmission, timing, and start/stop bit generation.  
+</details>
 </details>
