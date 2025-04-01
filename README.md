@@ -585,6 +585,26 @@ A common ground (GND) is essential for proper communication between the UART tra
 <details>
   <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
 
+Create the required files inside a folder under VSDSquadron_FM.
+
+Next, open the terminal and navigate to the uart_transmission folder using the following commands:
+
+cd VSDSquadron_FM  
+cd uart_transmission  
+
+Once inside the folder, verify the board connection using:
+
+lsusb  
+
+If the board is connected, you will see "Future Technology Devices International" in the output.
+
+Finally, build and flash the code with:
+
+make build  
+sudo make flash  
+
+That's it! The code is successfully transmitted.
+
 </details>
   
 </details>
