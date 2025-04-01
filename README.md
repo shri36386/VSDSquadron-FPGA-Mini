@@ -675,4 +675,10 @@ Data Buffer: Stores and stabilizes incoming sensor data for smooth transmission.
 
 Transmission Controller: Manages bit-by-bit transmission, timing, and start/stop bit generation.  
 </details>
+
+<details>
+  <summary><h3>STEP 2 - Design Documentation </h3> </summary>
+
+
+
 </details>
