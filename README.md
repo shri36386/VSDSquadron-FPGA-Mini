@@ -610,7 +610,7 @@ That's it! The code is successfully transmitted.
 <details>
   <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
 
-Install and open PuTTY.
+Install and open PuTTY or you may use docklight.
 
 Verify the correct serial port (e.g., COM7) is connected.
 
@@ -622,6 +622,7 @@ The RGB LED should be blinking, cycling between red, green, and blue.
 
 If these conditions are met, you have successfully completed the task!
 
+https://drive.google.com/file/d/1C8N5BCpPNtx6H7yrSQd2ao3JO7cgJtFj/view?usp=sharing
 
 </details>
 </details>
@@ -727,7 +728,8 @@ That is it. The code is transmitted.
 
 <details>
   <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
-Open PuTTY.
+
+  Open PuTTY or you may use docklight.
 
 Verify the correct port for serial communication (e.g., COM7).
 
