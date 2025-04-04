@@ -610,6 +610,19 @@ That's it! The code is successfully transmitted.
 <details>
   <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
 
+Install and open PuTTY.
+
+Verify the correct serial port (e.g., COM7) is connected.
+
+Check the output:
+
+A series of "D" characters should appear.
+
+The RGB LED should be blinking, cycling between red, green, and blue.
+
+If these conditions are met, you have successfully completed the task!
+
+
 </details>
 </details>
 
@@ -677,7 +690,7 @@ Transmission Controller: Manages bit-by-bit transmission, timing, and start/stop
 </details>
 
 <details>
-  <summary><h3>STEP 2 - Design Documentation </h3> </summary>
+  <summary><h3>STEP 2 - DESIGN DOCUMENTATION </h3> </summary>
 BLOCK DIAGRAM
 
   ![image](https://github.com/user-attachments/assets/34a28a5e-8333-4b33-a242-2078f632c0d0)
@@ -687,6 +700,7 @@ CIRCUIT DIAGRAM
 ![image](https://github.com/user-attachments/assets/1a9dbde0-104f-4c5e-ab6f-236f066bd8fe)
 
 </details>
+
 <details>
   <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
 Create the required files inside a folder under VSDSquadron_FM.
@@ -709,6 +723,18 @@ sudo make flash
 
 That is it. The code is transmitted.
 
-
 </details>
+
+<details>
+  <summary><h3>STEP 4 - VERIFICATION </h3> </summary>
+Open PuTTY.
+
+Verify the correct port for serial communication (e.g., COM7).
+
+Check the output:
+
+A series of "D" characters should appear.
+
+The RGB LED should be red.
+
 </details>
