@@ -678,7 +678,18 @@ Transmission Controller: Manages bit-by-bit transmission, timing, and start/stop
 
 <details>
   <summary><h3>STEP 2 - Design Documentation </h3> </summary>
+BLOCK DIAGRAM
+
+  ![image](https://github.com/user-attachments/assets/34a28a5e-8333-4b33-a242-2078f632c0d0)
+
+CIRCUIT DIAGRAM
+
+![image](https://github.com/user-attachments/assets/1a9dbde0-104f-4c5e-ab6f-236f066bd8fe)
+
+</details>
+<details>
+  <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
 
 
-
+</details>
 </details>
