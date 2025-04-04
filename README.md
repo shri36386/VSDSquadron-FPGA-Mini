@@ -689,6 +689,25 @@ CIRCUIT DIAGRAM
 </details>
 <details>
   <summary><h3>STEP 3 - IMPLEMENTATION </h3> </summary>
+Create the required files inside a folder under VSDSquadron_FM.
+
+Open the terminal and navigate to the uart_tx_sense folder using:
+
+cd VSDSquadron_FM  
+cd uart_tx_sense  
+
+Verify the board connection by running:
+
+lsusb  
+
+If connected, you will see "Future Technology Devices International" in the output.
+
+Build and flash the code:
+
+make build  
+sudo make flash  
+
+That is it. The code is transmitted.
 
 
 </details>
