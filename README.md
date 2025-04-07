@@ -742,3 +742,64 @@ The RGB LED should be red.
 https://drive.google.com/file/d/1Bb61uY00jVFBbObvupKQVIJ-5vhOMKln/view?usp=sharing
 
 </details>
+</details>
+
+
+
+<details>
+  <summary><h2>TASK 5 - Real-Time Sensor Data Acquisition and Transmission System </h2> </summary>
+
+Objectives:
+
+Conduct comprehensive research on the chosen theme.​
+
+Formulate a detailed project proposal outlining the system's functionality, required components, and implementation strategy.
+
+<details>
+  <summary><h2>STEP 1 - Literature review</h2> </summary>
+
+This project involves building a real-time temperature data acquisition system using an FPGA. The system uses an LM35 analog temperature sensor, which produces a voltage proportional to temperature. This voltage is digitized using an MCP3008 ADC module, processed by the FPGA, and transmitted via UART to a computer or external device for display or logging.
+
+Objectives
+
+- Acquire analog temperature data from an LM35 sensor in real time
+
+- Digitize the analog data using an SPI-based MCP3008 ADC
+
+- Process and format the data using Verilog or VHDL on an FPGA
+
+- Transmit the data to a PC using UART communication
+
+- Provide a scalable architecture that can be extended for multiple sensors
+
+</details>
+
+<details>
+  <summary><h2>STEP 2 - Define System Requirements</h2> </summary>
+
+Hardware
+
+- FPGA Board (e.g., Xilinx Spartan-6, Artix-7, or Intel Cyclone IV)
+
+- LM35 Analog Temperature Sensor
+
+- MCP3008 8-channel 10-bit ADC (SPI interface)
+
+- UART to USB converter (FTDI module)
+
+- Jumper wires, breadboard, 5V power supply
+
+Software
+
+- Xilinx Vivado / Intel Quartus
+
+- Verilog or VHDL
+
+- ModelSim or built-in simulator
+
+- PuTTY or Tera Term for serial monitoring on PC
+
+</details>
+
+</details>
+
