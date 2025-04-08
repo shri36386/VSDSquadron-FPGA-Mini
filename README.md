@@ -758,48 +758,64 @@ Formulate a detailed project proposal outlining the system's functionality, requ
 <details>
   <summary><h2>STEP 1 - Literature review</h2> </summary>
 
-This project involves building a real-time temperature data acquisition system using an FPGA. The system uses an LM35 analog temperature sensor, which produces a voltage proportional to temperature. This voltage is digitized using an MCP3008 ADC module, processed by the FPGA, and transmitted via UART to a computer or external device for display or logging.
+Distance-Based Buzzer Alert System Using HC-SR04 and FPGA
+
+This project is a real-time object detection system built using an FPGA and an ultrasonic distance sensor (HC-SR04). The system continuously monitors the distance to an object. If an object comes closer than 5 centimeters, a buzzer is triggered to alert the user. Otherwise, the system stays silent.
+
+The entire logic of distance measurement and buzzer control is implemented using Verilog on the FPGA. No microcontroller or analog circuits are used. The project demonstrates how basic digital logic and sensor interfacing can create a complete, working application with real-world relevance.
+
 
 Objectives
 
-- Acquire analog temperature data from an LM35 sensor in real time
+- Interface a digital ultrasonic sensor (HC-SR04) with an FPGA
 
-- Digitize the analog data using an SPI-based MCP3008 ADC
+- Measure the duration of the echo signal using counters
 
-- Process and format the data using Verilog or VHDL on an FPGA
+- Calculate the approximate distance using timing information
 
-- Transmit the data to a PC using UART communication
+- Compare the distance to a threshold (5 cm)
 
-- Provide a scalable architecture that can be extended for multiple sensors
+- Trigger a buzzer using square wave output when an object is too close
+
+- Design a clean, reliable, and repeatable hardware logic using Verilog
 
 </details>
 
 <details>
   <summary><h2>STEP 2 - Define System Requirements</h2> </summary>
 
-Hardware
+![image](https://github.com/user-attachments/assets/ecd6c8b2-bb72-4747-9208-d2e74beee964)
 
-- FPGA Board (e.g., Xilinx Spartan-6, Artix-7, or Intel Cyclone IV)
-
-- LM35 Analog Temperature Sensor
-
-- MCP3008 8-channel 10-bit ADC (SPI interface)
-
-- UART to USB converter (FTDI module)
-
-- Jumper wires, breadboard, 5V power supply
-
-Software
-
-- Xilinx Vivado / Intel Quartus
-
-- Verilog or VHDL
-
-- ModelSim or built-in simulator
-
-- PuTTY or Tera Term for serial monitoring on PC
 
 </details>
+
+<details>
+  <summary><h2>STEP 3 - Design System Architecture </h2> </summary>
+Here is the block diagram of the system -
+
+![image](https://github.com/user-attachments/assets/4d1de5ba-b1ea-4a68-9135-563319331d61)
+
+How It Works
+
+
+- The FPGA sends a short 10 microsecond HIGH pulse to the HC-SR04 sensor every 50 milliseconds. This initiates a distance measurement.
+
+- The sensor sends a sound wave and waits for it to bounce back. The Echo pin goes HIGH for a duration that depends on how far the object is.
+
+- The FPGA uses a counter to measure this time.
+
+- The FPGA uses the formula:
+
+Distance (cm) = (Time in microseconds × 0.0343) / 2
+
+- The 0.0343 is the speed of sound in cm/us. Division by 2 accounts for the round trip.
+
+- If the distance is less than 5 cm, the FPGA generates a square wave to turn on the buzzer (beep sound).
+
+- If the object is farther away, the output is HIGH (buzzer is off, as it’s active-low).
+
+
+
 
 </details>
 
