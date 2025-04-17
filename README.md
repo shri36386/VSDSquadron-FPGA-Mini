@@ -966,9 +966,33 @@ Bitstream Generation: It uses IcePack to convert the .asc file into a .bin file,
 Programming: It uses iceprog to upload the generated bitstream to the FPGA.
 
 Clean: It removes the intermediate files to clean up your directory after the build.
+
+The files have been uploaded.
 </details>
 
 <details>
   <summary><h2>STEP 4 - VIDEO OF THE PROJECT </h2> </summary>
+
+Hardware Setup:
+Connect signals:
+
+Clock (clk) to pin 21.
+
+Reset (rst) to pin 20.
+
+Trigger (trigger) to pin 99.
+
+Echo (echo) to pin 98.
+
+LED (led) to pin 96.
+
+Verify connections: Ensure the corresponding hardware devices (e.g., sensor, LEDs) are properly connected to the designated pins.
+
+Verification Process:
+Compile the design: Ensure the FPGA or microcontroller synthesizes correctly with the pin assignments in the .pcf file.
+
+Run simulation: Check if the system's behavior (triggering, echo responses, LED outputs) matches expectations.
+
+Test in hardware: After programming the device, physically verify the system works by toggling the inputs (e.g., trigger and reset) and checking the outputs (echo response and LED).
 
  </details> 
