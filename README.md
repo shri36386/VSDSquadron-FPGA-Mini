@@ -982,4 +982,6 @@ Run simulation: Check if the system's behavior (triggering, echo responses, LED 
 
 Test in hardware: After programming the device, physically verify the system works by toggling the inputs (e.g., trigger and reset) and checking the outputs (echo response and LED).
 
+https://github.com/user-attachments/assets/42f2e37c-3984-4025-bdcc-a2d768e12ab1
+
  </details> 
