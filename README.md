@@ -758,34 +758,94 @@ Formulate a detailed project proposal outlining the system's functionality, requ
 <details>
   <summary><h2>STEP 1 - Literature review</h2> </summary>
 
-Distance-Based Buzzer Alert System Using HC-SR04 and FPGA
+Distance-Based LED Alert System Using HC-SR04 and FPGA
 
-This project is a real-time object detection system built using an FPGA and an ultrasonic distance sensor (HC-SR04). The system continuously monitors the distance to an object. If an object comes closer than 5 centimeters, a buzzer is triggered to alert the user. Otherwise, the system stays silent.
+This project is a real-time object detection system built using an FPGA and an ultrasonic distance sensor (HC-SR04). The system continuously monitors the distance to an object. If the object comes closer than 5 centimeters, an LED is triggered to blink (toggle on and off). Otherwise, the system keeps the LED off.
 
-The entire logic of distance measurement and buzzer control is implemented using Verilog on the FPGA. No microcontroller or analog circuits are used. The project demonstrates how basic digital logic and sensor interfacing can create a complete, working application with real-world relevance.
-
+The entire logic of distance measurement and LED control is implemented using Verilog on the FPGA. No microcontroller or analog circuits are used. The project demonstrates how basic digital logic and sensor interfacing can create a complete, working application with real-world relevance.
 
 Objectives
+Interface a digital ultrasonic sensor (HC-SR04) with an FPGA
 
-- Interface a digital ultrasonic sensor (HC-SR04) with an FPGA
+Measure the duration of the echo signal using counters
 
-- Measure the duration of the echo signal using counters
+Calculate the approximate distance using timing information
 
-- Calculate the approximate distance using timing information
+Compare the distance to a threshold (5 cm)
 
-- Compare the distance to a threshold (5 cm)
+Trigger an LED to blink when an object is too close (less than 5 cm)
 
-- Trigger a buzzer using square wave output when an object is too close
-
-- Design a clean, reliable, and repeatable hardware logic using Verilog
-
+Design a clean, reliable, and repeatable hardware logic using Verilog
 </details>
 
 <details>
   <summary><h2>STEP 2 - Define System Requirements</h2> </summary>
 
-![image](https://github.com/user-attachments/assets/ecd6c8b2-bb72-4747-9208-d2e74beee964)
+1. FPGA Development Board
 
+iCE40UP5K (or similar FPGA development board)
+
+This FPGA board will be used to implement your Verilog design. You'll program the FPGA with the bitstream generated using the tools.
+
+Example:
+
+iCEBreaker FPGA Board (with iCE40UP5K)
+
+Board features: 5k LUTs, 128 I/O pins, integrated USB, etc.
+
+If you use a different FPGA, make sure the pinout and resources align with the configuration in the project.pcf.
+
+2. HC-SR04 Ultrasonic Sensor
+
+The HC-SR04 module is used for measuring the distance by emitting a sound wave and receiving its echo.
+
+VCC pin: Power supply for the module (5V).
+
+GND pin: Ground.
+
+Trig pin: Used to trigger the ultrasonic measurement.
+
+Echo pin: Receives the reflected signal (duration is used to calculate distance).
+
+3. LED
+
+A simple LED to blink based on the distance measurement.
+
+Resistor (typically 220Ω to 330Ω) in series with the LED to limit current and prevent damage.
+
+4. Power Supply
+
+5V power supply to power the HC-SR04 sensor and the FPGA board.
+
+Ensure the FPGA board is powered through USB or an external adapter depending on your setup.
+
+5. Jumper Wires
+
+Used for connecting the pins of the FPGA board to the HC-SR04 sensor and LED.
+
+Pin Connections for the Components
+
+1. HC-SR04 Ultrasonic Sensor to FPGA Board
+
+VCC (HC-SR04) → 5V power supply
+
+GND (HC-SR04) → GND
+
+Trig (HC-SR04) → Pin 2 on FPGA (configured in project.pcf)
+
+Echo (HC-SR04) → Pin 3 on FPGA (configured in project.pcf)
+
+2. LED to FPGA Board
+
+Anode (positive) → Pin 41 on FPGA (configured in project.pcf)
+
+Cathode (negative) → GND
+
+Current-limiting resistor (220Ω or 330Ω) in series with the LED.
+
+3. FPGA Board
+
+Pin 35 → Clock (12 MHz)
 
 </details>
 
@@ -795,50 +855,120 @@ Here is the block diagram of the system -
 
 ![image](https://github.com/user-attachments/assets/4d1de5ba-b1ea-4a68-9135-563319331d61)
 
-How It Works
+How It Works (with LED Control)
 
+The FPGA sends a short 10-microsecond HIGH pulse to the HC-SR04 sensor every 50 milliseconds. This pulse initiates a distance measurement.
 
-- The FPGA sends a short 10 microsecond HIGH pulse to the HC-SR04 sensor every 50 milliseconds. This initiates a distance measurement.
+The sensor emits a sound wave and waits for it to bounce back. The Echo pin goes HIGH for a duration that depends on how far the object is from the sensor.
 
-- The sensor sends a sound wave and waits for it to bounce back. The Echo pin goes HIGH for a duration that depends on how far the object is.
+The FPGA uses a counter to measure the duration of the Echo signal.
 
-- The FPGA uses a counter to measure this time.
-
-- The FPGA uses the formula:
+The FPGA uses the following formula to calculate the distance:
 
 Distance (cm) = (Time in microseconds × 0.0343) / 2
 
-- The 0.0343 is the speed of sound in cm/us. Division by 2 accounts for the round trip.
+Where:
 
-- If the distance is less than 5 cm, the FPGA generates a square wave to turn on the buzzer (beep sound).
+0.0343 is the speed of sound in cm/us.
 
-- If the object is farther away, the output is HIGH (buzzer is off, as it’s active-low).
+The division by 2 accounts for the round trip of the sound wave (out and back).
+
+If the measured distance is less than 5 cm, the FPGA toggles the LED (turning it ON and OFF repeatedly to create a blinking effect).
+
+If the distance is greater than or equal to 5 cm, the FPGA keeps the LED OFF (since it’s active-low).
+
 
 </details>
 
 <details>
   <summary><h2>STEP 4 - Develop FPGA Modules </h2> </summary>
 
-Write Verilog or VHDL code for each module, such as sensor interfaces, data processing units, and UART communication blocks.
-
 1. top.v
-This is the top-level module that ties everything together, including the clock, reset, echo signal, trigger pulse, and buzzer output. It also instantiates the other modules that handle specific tasks (trigger generation, echo timing, and buzzer control).
 
-2. trigger_gen.v
-This module generates a 10μs pulse every 50ms to initiate a new distance measurement via the HC-SR04 sensor. The parameters like the clock frequency and pulse width are set correctly.
+This is the top-level Verilog module that connects all the sub-modules and controls the overall logic of the project.
 
-3. echo_timer.v
-This module measures the duration for which the echo signal is high. This duration is used to calculate the distance.
+Inputs:
 
-4. buzzer_ctrl.v
-This module uses the measured duration (time) to compare against a threshold and activates/deactivates the buzzer. The threshold of 3500 cycles corresponds to a distance of ~5 cm, below which the buzzer will sound.
+clk: Main clock signal (12 MHz). It drives the logic in the design.
 
-5. project.pcf
-The pin constraints file that maps FPGA pins to the signals defined in the Verilog modules. The pin numbers provided (e.g., clk, rst, trigger, echo, buzzer) will need to be updated according to the specific board you are using (the iCEstick in this case).
+rst: Asynchronous reset signal to initialize the system to a known state.
 
-6. Makefile
-This provides the build process for compiling and uploading the project to the FPGA. It uses Yosys for synthesis, NextPNR for placement and routing, and IcePack for bitstream generation. The prog target is for programming the FPGA.
+echo: The Echo signal from the HC-SR04 ultrasonic sensor, used to measure distance.
 
-The files for the same have been uploaded.
+Outputs:
 
+trigger: Trigger signal for the HC-SR04 sensor to initiate distance measurement.
+
+led: Output signal to control the LED based on the measured distance.
+
+What it does:
+
+It uses the trigger_gen module to generate a 10 μs pulse at regular intervals (every 50 ms) to trigger the HC-SR04.
+
+It uses the echo_timer module to measure the time the Echo signal stays high, which corresponds to the distance.
+
+Based on the measured distance, it uses the led_ctrl module to control the blinking of the LED.
+
+2. led_ctrl.v
+
+This module controls the LED behavior based on the measured distance.
+
+Inputs:
+
+clk: Main clock signal to sync the logic.
+
+rst: Reset signal to initialize the module.
+
+duration: The measured duration from the Echo signal (representing the distance).
+
+Outputs:
+
+led_out: The LED output signal, which will control the blinking of the LED on the FPGA.
+
+What it does:
+
+It checks the duration (time taken for the Echo pulse to return).
+
+If the measured distance is below a certain threshold (5 cm), it toggles the LED (turning it ON/OFF).
+
+If the distance is above the threshold, the LED stays OFF.
+
+3. project.pcf
+
+This is the Pin Configuration File that specifies which FPGA pins are connected to the external components. It tells the FPGA toolchain (like NextPNR) how to assign your design's signals to the actual physical pins on the FPGA board.
+
+Pins specified:
+
+clk: Pin 35 (onboard clock at 12 MHz).
+
+trigger: Pin 2 (to trigger the HC-SR04 sensor).
+
+echo: Pin 3 (to receive the Echo signal from the HC-SR04 sensor).
+
+led: Pin 41 (to control the LED, which blinks based on distance).
+
+What it does:
+
+Ensures that the logic in your design is correctly mapped to the appropriate FPGA pins based on your hardware setup.
+
+4. Makefile
+
+This file automates the build process for your FPGA design using various tools like Yosys, NextPNR, and IcePack.
+
+What it does:
+
+Synthesis: It converts your Verilog files into a netlist (.json) format that the FPGA tools can work with.
+
+Place and Route: It runs NextPNR to perform placement and routing, producing a .asc file (bitstream layout).
+
+Bitstream Generation: It uses IcePack to convert the .asc file into a .bin file, which is the final bitstream used to program the FPGA.
+
+Programming: It uses iceprog to upload the generated bitstream to the FPGA.
+
+Clean: It removes the intermediate files to clean up your directory after the build.
 </details>
+
+<details>
+  <summary><h2>STEP 4 - VIDEO OF THE PROJECT </h2> </summary>
+
+ </details> 
