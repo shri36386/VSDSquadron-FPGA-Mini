@@ -839,4 +839,6 @@ The pin constraints file that maps FPGA pins to the signals defined in the Veril
 6. Makefile
 This provides the build process for compiling and uploading the project to the FPGA. It uses Yosys for synthesis, NextPNR for placement and routing, and IcePack for bitstream generation. The prog target is for programming the FPGA.
 
+The files for the same have been uploaded.
+
 </details>
