@@ -973,19 +973,6 @@ The files have been uploaded.
 <details>
   <summary><h2>STEP 4 - VIDEO OF THE PROJECT </h2> </summary>
 
-Hardware Setup:
-Connect signals:
-
-Clock (clk) to pin 21.
-
-Reset (rst) to pin 20.
-
-Trigger (trigger) to pin 99.
-
-Echo (echo) to pin 98.
-
-LED (led) to pin 96.
-
 Verify connections: Ensure the corresponding hardware devices (e.g., sensor, LEDs) are properly connected to the designated pins.
 
 Verification Process:
