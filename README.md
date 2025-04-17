@@ -814,8 +814,29 @@ Distance (cm) = (Time in microseconds × 0.0343) / 2
 
 - If the object is farther away, the output is HIGH (buzzer is off, as it’s active-low).
 
-
-
-
 </details>
 
+<details>
+  <summary><h2>STEP 4 - Develop FPGA Modules </h2> </summary>
+
+Write Verilog or VHDL code for each module, such as sensor interfaces, data processing units, and UART communication blocks.
+
+1. top.v
+This is the top-level module that ties everything together, including the clock, reset, echo signal, trigger pulse, and buzzer output. It also instantiates the other modules that handle specific tasks (trigger generation, echo timing, and buzzer control).
+
+2. trigger_gen.v
+This module generates a 10μs pulse every 50ms to initiate a new distance measurement via the HC-SR04 sensor. The parameters like the clock frequency and pulse width are set correctly.
+
+3. echo_timer.v
+This module measures the duration for which the echo signal is high. This duration is used to calculate the distance.
+
+4. buzzer_ctrl.v
+This module uses the measured duration (time) to compare against a threshold and activates/deactivates the buzzer. The threshold of 3500 cycles corresponds to a distance of ~5 cm, below which the buzzer will sound.
+
+5. project.pcf
+The pin constraints file that maps FPGA pins to the signals defined in the Verilog modules. The pin numbers provided (e.g., clk, rst, trigger, echo, buzzer) will need to be updated according to the specific board you are using (the iCEstick in this case).
+
+6. Makefile
+This provides the build process for compiling and uploading the project to the FPGA. It uses Yosys for synthesis, NextPNR for placement and routing, and IcePack for bitstream generation. The prog target is for programming the FPGA.
+
+</details>
