@@ -1,0 +1,5 @@
+set_io clk 21
+set_io rst 20
+set_io trigger 99
+set_io echo 98
+set_io buzzer 97
