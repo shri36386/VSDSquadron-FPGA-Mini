@@ -1,5 +1,4 @@
-set_io clk 21
-set_io rst 20
-set_io trigger 99
-set_io echo 98
-set_io buzzer 97
+set_io clk 35       // Clock signal on pin 35 (12MHz onboard clock)
+set_io trigger 2    // Trigger signal on pin 2 (for HC-SR04)
+set_io echo 3       // Echo signal on pin 3 (from HC-SR04)
+set_io led 41       // LED output on pin 41 (blinks based on distance)
