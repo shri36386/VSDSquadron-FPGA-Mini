@@ -1,20 +1,35 @@
-TOP = top
-DEVICE = hx1k
-PACKAGE = tq144
+# Project name and device specifications
+TOP = top              # Top-level Verilog module
+DEVICE = hx1k          # Device type (iCE40HX1K for iCEBreaker)
+PACKAGE = tq144        # Package type (can be adjusted depending on your board)
 
-all: $(TOP).bin
+# The generated files
+JSON_FILE = $(TOP).json
+ASC_FILE = $(TOP).asc
+BIN_FILE = $(TOP).bin
 
-$(TOP).json: $(TOP).v trigger_gen.v echo_timer.v buzzer_ctrl.v
-	yosys -p "synth_ice40 -top $(TOP) -json $(TOP).json" $^
+# The PCF file (pin configuration)
+PCF_FILE = project.pcf
 
-$(TOP).asc: $(TOP).json project.pcf
-	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --json $(TOP).json --pcf project.pcf --asc $(TOP).asc
+# All targets
+all: $(BIN_FILE)
 
-$(TOP).bin: $(TOP).asc
-	icepack $(TOP).asc $(TOP).bin
+# Step 1: Synthesis
+$(JSON_FILE): $(TOP).v trigger_gen.v echo_timer.v led_ctrl.v
+	yosys -p "synth_ice40 -top $(TOP) -json $(JSON_FILE)" $^
 
-prog: $(TOP).bin
-	iceprog $(TOP).bin
+# Step 2: Place and Route
+$(ASC_FILE): $(JSON_FILE) $(PCF_FILE)
+	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --json $(JSON_FILE) --pcf $(PCF_FILE) --asc $(ASC_FILE)
 
+# Step 3: Bitstream Generation
+$(BIN_FILE): $(ASC_FILE)
+	icepack $(ASC_FILE) $(BIN_FILE)
+
+# Step 4: Programming the FPGA
+prog: $(BIN_FILE)
+	iceprog $(BIN_FILE)
+
+# Clean up the generated files
 clean:
 	rm -f *.json *.asc *.bin
